@@ -1,0 +1,14 @@
+{
+    "totalHeartbeats": 1252,
+    "languageHeartbeats": {
+        "javascript": 857,
+        "http": 395
+    },
+    "fileHeartbeats": {
+        "dB/dbuser.js": 660,
+        "api.rest": 395,
+        "dB/dborder.js": 158,
+        "models/User.js": 34,
+        "index.js": 5
+    }
+}

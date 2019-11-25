@@ -1,0 +1,172 @@
+////////////////////////////////////////////
+//////////////USER MANAGEMENT///////////////
+////////////////////////////////////////////
+
+//USER LOGIN
+
+POST http://localhost:3000/user/login
+Content-Type:application/json
+
+{
+   "email":"a@hotmail.com",
+   "password":"admin1234"
+}
+
+
+###
+
+//USER LOGOUT
+
+POST http://localhost:3000/user/logout/5dd40ba7b18baa0484d2c617
+Content-Type:application/json
+
+
+###
+
+//PASSWORD RECOVER
+
+GET http://localhost:3000/user/recover
+Content-Type:application/json
+
+{
+   "token": "5dd4042605744227900bdad9",
+   "email":"b@hotmail.com",
+   "username":"Juan"
+}
+
+
+###
+
+
+//USER REGISTER
+
+
+POST http://localhost:3000/user/register
+Content-Type:application/json
+
+{
+    "token": "5dd408d33837d61634a8b7ae",
+    "username": "Pepito",
+    "email": "d@hotmail.com",
+    "phone": 666999888,
+    "billcard": 497894561555,
+    "password": "hahahahaha"
+}
+
+
+###
+
+//USER DELETE
+
+
+DELETE http://localhost:3000/user/delete
+Content-Type:application/json
+
+{
+    "token": "5dd40ba7b18baa0484d2c617",
+    "email": "",
+    "password": "" 
+}
+
+
+###
+
+//SHOW ALL USERS
+
+GET http://localhost:3000/user/show
+Content-Type:application/json
+
+{
+    "token" : "5dd3fa1c37c7d611a0079a45"
+}
+
+###
+
+//SHOW CERTAIN USER PROFILE
+
+GET http://localhost:3000/user/showme
+Content-Type:application/json
+
+{
+    "token": "5dd3fa1c37c7d611a0079a45",
+    "username" : "Miguel",
+    "email" : "c@hotmail.com"
+}
+
+###
+
+
+
+
+
+////////////////////////////////////////////
+//////////////MOVIE MANAGEMENT//////////////
+////////////////////////////////////////////
+
+//SHOW ALL FILMS
+GET http://localhost:3000/films/show
+    Content-Type:application/json
+
+    
+###
+
+
+//FILTER BY ID
+
+GET http://localhost:3000/films/id/694
+
+###
+
+//FILTER BY GENRE
+
+GET http://localhost:3000/films/genre/drama
+
+###
+
+//FILTER BY MOVIE TITLE
+
+GET http://localhost:3000/films/title/El resplandor
+
+###
+
+//FILTER BY POPULARITY
+
+GET http://localhost:3000/films/popular/10
+
+###
+
+
+
+
+
+////////////////////////////////////////////
+//////////////ORDER MANAGEMENT//////////////
+////////////////////////////////////////////
+
+
+//SHOW ALL THE ORDERS
+GET http://localhost:3000/order/show
+Content-Type:application/json
+
+
+###
+
+//SHOW ORDERS BY A SPECIFIC USER
+GET http://localhost:3000/order/show/b@hotmail.com
+Content-Type:application/json
+
+###
+
+//PLACE AN ORDER
+POST http://localhost:3000/order
+Content-Type:application/json
+
+{
+    "token" : "5dd40e46fe23483bcc0593d2",
+    "userid": "5dd406fc70d8ee1bd8742a5e",
+    "idfilm": 953,
+    "price": "10"
+}
+
+###
+
