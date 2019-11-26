@@ -10,21 +10,27 @@ const LoginUser = (req, res) => {
     UserModel.findOne({ $and: [{email: usuario.email},{password: usuario.password}]})
         .then((users)=>{
             if(users){
+                
                 if(users.email === usuario.email && users.password === usuario.password){
                     //creation of token.
-
+                    
                     new TokenModel ({
 
                     id_user: users._id,
                     
                     }).save()
                     .then(tokens=>{
-                        res.send("¡MUY IMPORTANTE!: Tu identificador de usuario es : " + tokens._id);
+                        res.send({
+                            token: tokens._id,
+                            name: users.username,
+                            userid: users._id
+                        });
                     })
                     .catch(error=>console.log(error))
                 }
             }else{
-                res.send("Los datos introducidos no son correctos.");
+                
+                res.send({"message": "Los datos introducidos no son correctos."});
             }
         })
     .catch(error=>console.log(error))
@@ -37,9 +43,11 @@ const LogoutUser = (req, res) => {
     TokenModel.findByIdAndDelete(token)
     .then(tokens=>{
         if(tokens){
-            res.send("Log out completado con éxito");
+            console.log("log out exitoso");
+            res.send({"message":"Log out completado con éxito"});
         }else{
-            res.send("No se ha podido completar el log out");
+            console.log("log out fallido");
+            res.send({"message":"No se ha podido completar el log out"});
         }
     })
      
@@ -75,7 +83,6 @@ const recoverUser = (req, res) => {
 
 const addUserCheck = (req,res) => {
     
-    
         const rB = req.body;
 
             //comprobaciones
@@ -103,12 +110,7 @@ const addUserCheck = (req,res) => {
                     addUser(req,res,rB);
                 }  
             })
-            .catch(error=>console.log(error))
-        
-    
-    
-    
-        
+            .catch(error=>console.log(error));        
 }
 
 const addUser = (req,res,rB) => {
@@ -198,7 +200,7 @@ const showUserC = (req, res) => {
     .then((token)=>{
     
     if(token){ 
-
+        
         const userConcreto = req.body;
         
         UserModel.find({ $and: [{email: userConcreto.email},{username: userConcreto.username}]})

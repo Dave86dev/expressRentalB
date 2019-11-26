@@ -17,7 +17,7 @@ Content-Type:application/json
 
 //USER LOGOUT
 
-POST http://localhost:3000/user/logout/5dd40ba7b18baa0484d2c617
+GET http://localhost:3000/user/logout/5ddd40962efde932c8b2aaf0
 Content-Type:application/json
 
 
@@ -45,7 +45,6 @@ POST http://localhost:3000/user/register
 Content-Type:application/json
 
 {
-    "token": "5dd408d33837d61634a8b7ae",
     "username": "Pepito",
     "email": "d@hotmail.com",
     "phone": 666999888,
@@ -84,13 +83,13 @@ Content-Type:application/json
 
 //SHOW CERTAIN USER PROFILE
 
-GET http://localhost:3000/user/showme
+POST http://localhost:3000/user/showme
 Content-Type:application/json
 
 {
-    "token": "5dd3fa1c37c7d611a0079a45",
-    "username" : "Miguel",
-    "email" : "c@hotmail.com"
+    "token": "5dd7acd94e986d25200ccd2a",
+    "username" : "Tania",
+    "email" : "b@hotmail.com"
 }
 
 ###

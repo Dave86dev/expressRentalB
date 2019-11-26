@@ -43,12 +43,12 @@ dbconnect();
 
 //user
 app.post('/user/login', LoginUser);
-app.post('/user/logout/:token', LogoutUser);
+app.get('/user/logout/:token', LogoutUser);
 app.get('/user/recover', recoverUser);
 app.post('/user/register', addUserCheck);
 app.delete('/user/delete', eraseUser);
 app.get('/user/show', showUsers);
-app.get('/user/showme', showUserC);
+app.post('/user/showme', showUserC);
 
 
 
