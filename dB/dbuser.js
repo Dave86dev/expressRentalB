@@ -200,6 +200,7 @@ const showUsers = (req, res) => {
 }
 
 const showUserC = (req, res) => {
+    
     TokenModel.findOne({_id: req.body.token})
     .then((token)=>{
     
@@ -207,13 +208,19 @@ const showUserC = (req, res) => {
         
         const userConcreto = req.body;
         
-        UserModel.find({ $and: [{email: userConcreto.email},{username: userConcreto.username}]})
+        //UserModel.find({ $and: [{email: userConcreto.email},{username: userConcreto.username}]})
+        UserModel.findOne({username: userConcreto.name})
         .then(users=>{
-            res.send(users)
+            if(users){
+                
+                res.send(users)
+            }
+            
         })
         .catch(error=>console.log(error))
     }else{
-        res.send("Debes de permanecer dado de alta en el login para realizar esta acción.")
+        console.log("o aqui");
+        res.send({"message": "Debes de estar logeado para ver esto"})
     }
     })
     .catch(error=>console.log(error))

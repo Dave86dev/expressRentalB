@@ -113,7 +113,7 @@ const showFilmsGenre = (req, res) => {
     
     //genref = género introducido por url en nuestra api
     //limitamos a 6 los resultados y mostramos los resultados según fecha descendiente
-    MovieModel.find({ $and: [{ genre_ids: allgenres[genref]},{ poster_path: { $ne: null } }]}).limit(60).sort({ release_date : -1 })
+    MovieModel.find({ $and: [{ genre_ids: allgenres[genref]},{ poster_path: { $ne: null } }]}).limit(75).sort({ release_date : -1 })
      
      .then(movies=>{
          
