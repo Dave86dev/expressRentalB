@@ -71,7 +71,7 @@ const showFilmsTitle = (req, res) => {
     //interpretar el resultado de forma case insensitive.
     let titulo = req.params.showTitle;
     
-    MovieModel.find({"title" : {$regex : `.*${titulo}.*`, $options: 'i'}}).limit(6)
+    MovieModel.find({ $and: [{"title" : {$regex : `.*${titulo}.*`, $options: 'i'}}]}).limit(60)
      
      .then(movies=>{
          
@@ -113,7 +113,7 @@ const showFilmsGenre = (req, res) => {
     
     //genref = género introducido por url en nuestra api
     //limitamos a 6 los resultados y mostramos los resultados según fecha descendiente
-    MovieModel.find({ genre_ids: allgenres[genref]}).limit(6).sort({ release_date : -1 })
+    MovieModel.find({ $and: [{ genre_ids: allgenres[genref]},{ poster_path: { $ne: null } }]}).limit(60).sort({ release_date : -1 })
      
      .then(movies=>{
          
@@ -121,7 +121,6 @@ const showFilmsGenre = (req, res) => {
          
      })
      .catch(error=>console.log(error))
- 
 }
 
 const addFilms = (req,res) => {
