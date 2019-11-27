@@ -109,7 +109,7 @@ const showFilmsGenre = (req, res) => {
         "western" : 37
     } 
     
-    let genref = req.params.showGenre;
+    let genref = req.params.showGenre.toLowerCase();
     
     //genref = género introducido por url en nuestra api
     //limitamos a 6 los resultados y mostramos los resultados según fecha descendiente

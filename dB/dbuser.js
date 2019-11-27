@@ -82,21 +82,22 @@ const recoverUser = (req, res) => {
 }
 
 const addUserCheck = (req,res) => {
-    
+        
         const rB = req.body;
+       
 
             //comprobaciones
 
             const longCheckMail = /.{8,}/
             //email 8 digit minimum
             if (!longCheckMail.test(rB.email)) {
-                return res.send(`email demasiado corto, mínimo de 8 caracteres`);
+                return res.send({"message": "Email demasiado corto, el mínimo son 8 caracteres."});
             }
 
             const longCheckPass = /.{5,}/
             //password 5 digit minimum
             if (!longCheckPass.test(rB.password)) {
-                return res.send(`password demasiado corto, mínimo de 5 caracteres`);
+                return res.send({"message": "Password demasiado corto, el mínimo son 5 caracteres."});
             }
 
             //e-mail repetition avoid. 
@@ -104,7 +105,7 @@ const addUserCheck = (req,res) => {
             .then(userExists=>{
 
                 if (userExists) {       
-                    return res.send(`${rB.email} already exists in our database.`);                                       
+                    return res.send({"message": `${rB.email} ya existe en nuestra base de datos.`});                                       
 
                 }else{
                     addUser(req,res,rB);
@@ -128,7 +129,10 @@ const addUser = (req,res,rB) => {
         
     }).save()
     .then(users=>{
-        res.send(users);
+        //res.send(users);
+        return res.send({
+            name: rBok.username
+        });
         
     })
     .catch(error=>console.log(error))
