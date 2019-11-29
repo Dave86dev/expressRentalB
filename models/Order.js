@@ -20,6 +20,9 @@ const OrderSchema=mongoose.Schema({
     },
     price:{
         type:Number,
+    },
+    days:{
+        type:Number,
     }
 })
 

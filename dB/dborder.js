@@ -67,7 +67,8 @@ const showOrdersUser = (req, res) => {
                                 phone: users.phone,
                                 orderdate: orderfound.orderdate,
                                 returndate: orderfound.returndate,
-                                price: rentPrice
+                                price: rentPrice,
+                                days: orderfound.days
                             }
 
                             res.send(orderdisplay);
@@ -107,13 +108,15 @@ const placeOrder = (req,res) => {
                     OrderModel.findOne({userid:req.body.userid})
                     .then(order=>{
                         if(order){
-                            return res.send("El usuario introducido ya tiene un alquiler en proceso");
+                            return res.send({"message": "El usuario ya tiene un alquiler en proceso."});
                         }else{
-
-                        setOrderDates();
-                        //we set the rental date as the day of today, and the return date 15 days from now on.
                         
+                        //we set the rental date as the day of today, and the return date depending on user's choice.
+                        console.log("SIIIIIIIIIIIIII");
                         const rB = req.body;
+
+                        setOrderDates(rB.days);
+                        
                         
                         new OrderModel ({
 
@@ -121,7 +124,8 @@ const placeOrder = (req,res) => {
                             idfilm: rB.idfilm,
                             orderdate: rentDay,
                             returndate: returnDay,
-                            price: 3
+                            price: 3,
+                            days: rB.days
                         
                         }).save()
                         .then(users=>{
@@ -132,7 +136,7 @@ const placeOrder = (req,res) => {
                     })
                     .catch(error=>console.log(error))    
                 }else{
-                    return res.send("No existe ningún usuario con esa id en nuestra base de datos");
+                    return res.send({"message": "No existe ningún usuario con esa id en nuestra base de datos"});
                 }
             })
             .catch(error=>console.log(error))
@@ -140,13 +144,13 @@ const placeOrder = (req,res) => {
         
 
     }else{
-        res.send("Debes de permanecer dado de alta en el login para realizar esta acción.");
+        res.send({"message": "Debes de permanecer dado de alta en el login para realizar esta acción."});
     }
     })
     .catch(error=>console.log(error))
 }
 
-function setOrderDates(){
+function setOrderDates(days){
         
         
         let dd = rentDay.getDate();
@@ -162,7 +166,7 @@ function setOrderDates(){
         }
         
         rentDay = (dd + '/' + mm + '/' + yyyy);
-        returnDay.setDate(returnDay.getDate() + 15);
+        returnDay.setDate(returnDay.getDate() + days);
         
         dd = returnDay.getDate();
         mm = returnDay.getMonth() + 1;

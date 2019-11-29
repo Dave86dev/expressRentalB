@@ -164,7 +164,8 @@ Content-Type:application/json
     "token" : "5ddff84801fb3131583507b5",
     "userid": "5dd408713837d61634a8b7ad",
     "idfilm": 953,
-    "price": "10"
+    "price": "10",
+    "days": 3
 }
 
 ###
