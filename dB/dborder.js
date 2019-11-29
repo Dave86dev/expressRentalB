@@ -76,7 +76,7 @@ const showOrdersUser = (req, res) => {
                         .catch(error=>console.log(error))
                     }else{
                         //el cliente no está procesando un alquiler
-                        res.send("El cliente no ha alquilado ninguna película en estos momentos");
+                        res.send({"message": `El cliente no ha alquilado ninguna película en estos momentos`});
                     }
             })
             .catch(error=>console.log(error))

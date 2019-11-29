@@ -8,8 +8,8 @@ POST http://localhost:3000/user/login
 Content-Type:application/json
 
 {
-   "email":"a@hotmail.com",
-   "password":"admin1234"
+   "email":"c@hotmail.com",
+   "password":"22334455667788"
 }
 
 
@@ -161,8 +161,8 @@ POST http://localhost:3000/order
 Content-Type:application/json
 
 {
-    "token" : "5dd40e46fe23483bcc0593d2",
-    "userid": "5dd406fc70d8ee1bd8742a5e",
+    "token" : "5ddff84801fb3131583507b5",
+    "userid": "5dd408713837d61634a8b7ad",
     "idfilm": 953,
     "price": "10"
 }
