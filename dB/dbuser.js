@@ -219,12 +219,30 @@ const showUserC = (req, res) => {
         })
         .catch(error=>console.log(error))
     }else{
-        console.log("o aqui");
-        res.send({"message": "Debes de estar logeado para ver esto"})
+        
+        res.send({"message": "You must be logged in to see this"})
     }
     })
     .catch(error=>console.log(error))
     
+}
+
+const modifyUser = (req, res) => {
+    
+    UserModel.findByIdAndUpdate(req.body.id,
+        {phone: req.body.phone, billcard: req.body.billcard}, {new:true, useFindAndModify:false})
+    .then( (user) => {
+
+        if(user){
+
+            if(user){
+                res.send(user);
+            }else{
+                res.send({"message": "Oops! there was an error updating the changes."})
+            }
+            
+        }
+    }).catch (err => console.log(err));    
 }
 
 
@@ -233,6 +251,7 @@ module.exports= {
     LogoutUser,
     recoverUser,
     addUser,
+    modifyUser,
     addUserCheck,
     eraseUser,
     showUsers,

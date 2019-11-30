@@ -55,6 +55,21 @@ Content-Type:application/json
 
 ###
 
+//USER MODIFY
+
+
+POST http://localhost:3000/user/modify
+Content-Type:application/json
+
+{
+    "id": "5de2da5950d5aa0508754f7f",
+    "phone": 444,
+    "billcard": 999888777
+}
+
+
+###
+
 //USER DELETE
 
 
