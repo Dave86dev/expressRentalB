@@ -108,7 +108,7 @@ const placeOrder = (req,res) => {
                     OrderModel.findOne({userid:req.body.userid})
                     .then(order=>{
                         if(order){
-                            return res.send({"message": "El usuario ya tiene un alquiler en proceso."});
+                            return res.send({"message": "Oops! You already have one order in process."});
                         }else{
                         
                         //we set the rental date as the day of today, and the return date depending on user's choice.
@@ -166,8 +166,8 @@ function setOrderDates(days){
         }
         
         rentDay = (dd + '/' + mm + '/' + yyyy);
-        returnDay.setDate(returnDay.getDate() + days);
-        
+        returnDay.setDate(returnDay.getDate() + days); //sumamos el número de dias obtenido por parámetro,
+                                                       //esta cantidad hace referencia a la elección del ususario   
         dd = returnDay.getDate();
         mm = returnDay.getMonth() + 1;
         yyyy = returnDay.getFullYear();
