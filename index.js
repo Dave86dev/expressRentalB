@@ -26,7 +26,7 @@ const {placeOrder} = require('./dB/dborder');
 
 //Middleware
 app.use(express.json());
-// Configurar cabeceras y cors
+// Configure headers & cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');

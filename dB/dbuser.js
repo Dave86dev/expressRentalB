@@ -10,7 +10,7 @@ const LoginUser = (req, res) => {
     UserModel.findOne({ $and: [{email: usuario.email},{password: usuario.password}]})
         .then((users)=>{
             if(users){
-                
+                //if BOTH email and password match. 
                 if(users.email === usuario.email && users.password === usuario.password){
                     //creation of token.
                     
@@ -21,6 +21,7 @@ const LoginUser = (req, res) => {
                     }).save()
                     .then(tokens=>{
                         res.send({
+                            //IMPORTANT, we return the object with token, name and userid
                             token: tokens._id,
                             name: users.username,
                             userid: users._id
@@ -30,7 +31,7 @@ const LoginUser = (req, res) => {
                 }
             }else{
                 
-                res.send({"message": "Los datos introducidos no son correctos."});
+                res.send({"message": "Introduced data is not correct."});
             }
         })
     .catch(error=>console.log(error))
@@ -43,11 +44,11 @@ const LogoutUser = (req, res) => {
     TokenModel.findByIdAndDelete(token)
     .then(tokens=>{
         if(tokens){
-            console.log("log out exitoso");
-            res.send({"message":"Log out completado con éxito"});
+            //user was found and token is DELETED.
+            res.send({"message":"Logged out successfully"});
         }else{
-            console.log("log out fallido");
-            res.send({"message":"No se ha podido completar el log out"});
+            
+            res.send({"message":"Can't complete log out process"});
         }
     })
      
@@ -63,19 +64,20 @@ const recoverUser = (req, res) => {
             UserModel.findOne({ $and: [{email: usuario.email},{username: usuario.username}]})
         .then((users)=>{
             if(users){
+                //BOTH user email and password match in our database.
                 if(users.email === usuario.email && users.username === usuario.username){
                     
                     //we return the user password which will serve to login.
-                    res.send("¡NO LO PIERDAS!: Tu password es : " + users.password)
+                    res.send("¡Don't loose it!: Your password is : " + users.password)
                     
                 }
             }else{
-                res.send("Los datos introducidos no son correctos");
+                res.send("Introduced data is not correct");
             }
         })
         .catch(error=>console.log(error))
         }else{
-            res.send("Debes de permanecer dado de alta en el login para realizar esta acción.")
+            res.send("You must be logged in to complete this action")
         }
     })
     .catch(error=>console.log(error))    
@@ -84,20 +86,18 @@ const recoverUser = (req, res) => {
 const addUserCheck = (req,res) => {
         
         const rB = req.body;
-       
-
-            //comprobaciones
+            //we check the given data... in case it's faulty we exit with return
 
             const longCheckMail = /.{8,}/
             //email 8 digit minimum
             if (!longCheckMail.test(rB.email)) {
-                return res.send({"message": "Email demasiado corto, el mínimo son 8 caracteres."});
+                return res.send({"message": "E-mail too short, at least 8 characters."});
             }
 
             const longCheckPass = /.{5,}/
             //password 5 digit minimum
             if (!longCheckPass.test(rB.password)) {
-                return res.send({"message": "Password demasiado corto, el mínimo son 5 caracteres."});
+                return res.send({"message": "Password too short, at least 5 characters"});
             }
 
             //e-mail repetition avoid. 
@@ -105,7 +105,7 @@ const addUserCheck = (req,res) => {
             .then(userExists=>{
 
                 if (userExists) {       
-                    return res.send({"message": `${rB.email} ya existe en nuestra base de datos.`});                                       
+                    return res.send({"message": `${rB.email} already existing on our database`});                                       
 
                 }else{
                     addUser(req,res,rB);
@@ -150,7 +150,6 @@ let admin_id = token.id_user;
         
     if(admin_id == `5dd403c6a6143003107c3f2e`){
    
-
     UserModel.findOne({ $and: [{email: usuario.email},{password: usuario.password}]})
         .then((users)=>{
             if(users){
@@ -158,24 +157,21 @@ let admin_id = token.id_user;
                 if(users.email === usuario.email && users.password === usuario.password){
                     
                     users.delete();
-                    res.send("La eliminación se ha producido correctamente");
+                    res.send("Delete procedure complete.");
                 }
             }else{
-                res.send("No se ha podido eliminar, los datos introducidos no son correctos.");
+                res.send("Couldn't delete, data is not correct.");
             }
         })
         .catch(error=>console.log(error))
 
     }else{
-        res.send("No tienes permisos de administrador para realizar tal acción.")
+        res.send("You need admin privileges to proceed with such action.")
     }
 
     }else{
-        res.send("Debes de permanecer dado de alta en el login para realizar esta acción.")
+        res.send("You should remain logged in to proceed with such action.")
     }
-
-    
-
     })
     .catch(error=>console.log(error))
 }
@@ -193,7 +189,7 @@ const showUsers = (req, res) => {
         })
         .catch(error=>console.log(error))
     }else{
-        res.send("Debes de permanecer dado de alta en el login para realizar esta acción.")
+        res.send("You should remain logged in to proceed with such action.")
     }
     })
     .catch(error=>console.log(error))
@@ -201,6 +197,7 @@ const showUsers = (req, res) => {
 
 const showUserC = (req, res) => {
     
+    //token search...
     TokenModel.findOne({_id: req.body.token})
     .then((token)=>{
     
@@ -208,14 +205,12 @@ const showUserC = (req, res) => {
         
         const userConcreto = req.body;
         
-        //UserModel.find({ $and: [{email: userConcreto.email},{username: userConcreto.username}]})
+        //token is found and user is searched, if found, value will be returned.
         UserModel.findOne({username: userConcreto.name})
         .then(users=>{
             if(users){
-                
                 res.send(users)
             }
-            
         })
         .catch(error=>console.log(error))
     }else{
@@ -228,7 +223,7 @@ const showUserC = (req, res) => {
 }
 
 const modifyUser = (req, res) => {
-    
+    //we search the user and once found, we set the PHONE and BILLCARD fields simultaneously
     UserModel.findByIdAndUpdate(req.body.id,
         {phone: req.body.phone, billcard: req.body.billcard}, {new:true, useFindAndModify:false})
     .then( (user) => {
@@ -236,6 +231,7 @@ const modifyUser = (req, res) => {
         if(user){
 
             if(user){
+                //then positively user was found and updated.
                 res.send(user);
             }else{
                 res.send({"message": "Oops! there was an error updating the changes."})
@@ -244,7 +240,6 @@ const modifyUser = (req, res) => {
         }
     }).catch (err => console.log(err));    
 }
-
 
 module.exports= {
     LoginUser,

@@ -28,7 +28,7 @@ const showOrders = (req, res) => {
                         .then(orders => {
                             if (orders == "") {
                                 res.send({
-                                    "message": "No consta de ningún pedido en nuestra base de datos"
+                                    "message": "There are no orders in our database."
                                 })
 
                             } else {
@@ -113,20 +113,18 @@ const showOrdersUser = (req, res) => {
                         } else {
                             //el cliente no está procesando un alquiler
                             res.send({
-                                "message": `El cliente no ha alquilado ninguna película en estos momentos`
+                                "message": `User has not any rental process right now.`
                             });
                         }
                     })
                     .catch(error => console.log(error))
             } else {
                 //el cliente no existe en la base de datos.
-                res.send("No consta ningún cliente con la dirección de email especificada");
+                res.send("Oops! there is no user with such e-mail in our database.");
             }
 
         })
         .catch(error => console.log(error))
-
-
 }
 
 const placeOrder = (req, res) => {
@@ -135,7 +133,7 @@ const placeOrder = (req, res) => {
             _id: req.body.token
         })
         .then((token) => {
-            console.log()
+            
             if (token) {
 
                 UserModel.findOne({
@@ -157,7 +155,7 @@ const placeOrder = (req, res) => {
                                     } else {
 
                                         //we set the rental date as the day of today, and the return date depending on user's choice.
-                                        console.log("SIIIIIIIIIIIIII");
+                                        
                                         const rB = req.body;
 
                                         setOrderDates(rB.days);
@@ -182,7 +180,7 @@ const placeOrder = (req, res) => {
                                 .catch(error => console.log(error))
                         } else {
                             return res.send({
-                                "message": "No existe ningún usuario con esa id en nuestra base de datos"
+                                "message": "There is no user with such credentials in our database"
                             });
                         }
                     })
@@ -192,7 +190,7 @@ const placeOrder = (req, res) => {
 
             } else {
                 res.send({
-                    "message": "Debes de permanecer dado de alta en el login para realizar esta acción."
+                    "message": "You must be logged in to place an order.."
                 });
             }
         })
