@@ -159,9 +159,13 @@ GET http://localhost:3000/films/popular/10
 
 
 //SHOW ALL THE ORDERS
-GET http://localhost:3000/order/show
+POST http://localhost:3000/order/show
 Content-Type:application/json
 
+{
+    "email" : "",
+    "password" : ""
+}
 
 ###
 

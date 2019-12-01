@@ -64,7 +64,7 @@ app.get('/films/genre/:showGenre', showFilmsGenre);
 
 
 //orders
-app.get('/order/show', showOrders);
+app.post('/order/show', showOrders);
 app.get('/order/show/:showOrdersUserEmail', showOrdersUser);
 app.post('/order', placeOrder);
 
